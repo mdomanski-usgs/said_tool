@@ -538,7 +538,8 @@ p = mdl.NumCoefficients;
 n = mdl.NumObservations;
 
 % observation number array
-ObsNumber = (1:length(mdlDS))';
+% ObsNumber = (1:length(mdlDS))';
+ObsNumber = (1:height(mdlDS))';
 ObsNumber(~iObs) = [];
 
 % y variable from the dataset
@@ -546,7 +547,8 @@ y = mdlDS.(mdl.ResponseName);
 y(~iObs) = [];
 
 % initialize empty X matrix from model
-fullmodelX = [ ones(n,1) double(mdlDS(iObs , mdl.VariableInfo.InModel')) ];
+% fullmodelX = [ ones(n,1) double(mdlDS(iObs , mdl.VariableInfo.InModel')) ];
+fullmodelX = [ ones(n,1) table2array(mdlDS(iObs , mdl.VariableInfo.InModel')) ];
 
 % find the column of the predictor variable
 i = find(strcmp(PredictorVariableName,mdl.PredictorNames))+1;
@@ -647,8 +649,8 @@ end
 iIncluded = ~(mdl.ObservationInfo.Missing | mdl.ObservationInfo.Excluded);
 
 % observation numbers
-ObsNums = 1:length(mdl.Variables);
-% ObsNums = 1:height(mdl.Variables); % changed for 2014a - MMD 20151015
+% ObsNums = 1:length(mdl.Variables);
+ObsNums = 1:height(mdl.Variables); % changed for 2014a - MMD 20151015
 ObsNums = ObsNums(iIncluded);
 
 % get the fitted response values
@@ -725,6 +727,8 @@ else
     h = figure;
 end
 
+mdlVariables = table2dataset(mdl.Variables);
+
 if strfind(mdl.ResponseName,'log10')==1
     ResponseName = strrep(mdl.ResponseName,'log10','');
     f_inv = @(x) 10.^x;
@@ -748,10 +752,11 @@ end
 iIncluded = ~(mdl.ObservationInfo.Missing | mdl.ObservationInfo.Excluded);
 
 % call smearing function
-SmearedLineDS = smear_estimate(mdl,mdl.Variables);
+% SmearedLineDS = smear_estimate(mdl,mdl.Variables);
+SmearedLineDS = smear_estimate(mdl,mdlVariables);
 
 % observation numbers
-ObsNums = 1:length(mdl.Variables);
+ObsNums = 1:length(mdlVariables);
 % ObsNums = 1:length(mdl.Variables); % changed for 2014a - MMD 20151015
 ObsNums = ObsNums(iIncluded);
 
@@ -759,7 +764,7 @@ ObsNums = ObsNums(iIncluded);
 YPred = SmearedLineDS.(ResponseName)(iIncluded);
 
 % get the observed response values
-YObs = f_inv(mdl.Variables.(mdl.ResponseName)(iIncluded));
+YObs = f_inv(mdlVariables.(mdl.ResponseName)(iIncluded));
 
 % plot the predicted values against the observed values
 plot(YObs,YPred,'bx');
@@ -829,8 +834,10 @@ else
     h = figure;
 end
 
+mdlVariables = table2dataset(mdl.Variables);
+
 % date/time variable to plot residuals against
-ResTime = mdl.Variables.(dateVarName);
+ResTime = mdlVariables.(dateVarName);
 
 % raw residuals
 RawRes = mdl.Residuals.Raw;

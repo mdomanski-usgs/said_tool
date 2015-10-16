@@ -81,7 +81,9 @@ handles.output = hObject;
 % initialize the default empty advm parameter structure
 advmParamStruct = default_advm_param_struct();
 
-const_ds = dataset();
+% const_ds = dataset();
+const_ds = table();
+matched_ds = table();
 
 version = '1.0';
 
@@ -95,7 +97,8 @@ setappdata(hObject,'trans_vars',{});
 setappdata(hObject,'max_time_min',5);
 setappdata(hObject,'bsPlotsFigNum',50);
 setappdata(hObject,'const_ds',const_ds);
-setappdata(hObject,'matched_ds',dataset());
+% setappdata(hObject,'matched_ds',dataset());
+setappdata(hObject,'matched_ds',matched_ds);
 setappdata(hObject,'ExcludeDates',[]);
 setappdata(hObject,'version', version);
 setappdata(hObject,'session_name','New');
@@ -381,7 +384,8 @@ if ~isempty(matched_ds)
         trans_var_name = [trans_var{2} trans_var{1}];
         
         % if the new variable name isn't already in the matched dataset
-        if ~any(strcmp(trans_var_name,get(matched_ds,'VarNames')))
+%         if ~any(strcmp(trans_var_name,get(matched_ds,'VarNames')))
+        if ~any(strcmp(trans_var_name,matched_ds.Properties.VariableNames))
             
             % add the new transformed variable to the global list of
             % transformations
@@ -650,7 +654,8 @@ loaded_var_struct = getappdata(handles.figure1,'loaded_var_struct');
 const_ds = getappdata(handles.figure1,'const_ds');
 
 var_struct_names = fieldnames(loaded_var_struct);
-const_var_names = get(const_ds,'VarNames');
+% const_var_names = get(const_ds,'VarNames');
+const_var_names = const_ds.Properties.VariableNames;
 
 
 % if data was loaded
@@ -689,8 +694,10 @@ function SAIDNew_pushbutton_Callback(hObject, eventdata, handles)
 % get the default advm parameter structure
 advmParamStruct = default_advm_param_struct();
 
+matched_ds = table();
+
 % clear global variables and set to default values
-setappdata(handles.figure1,'matched_ds',dataset());
+setappdata(handles.figure1,'matched_ds',matched_ds);
 setappdata(handles.figure1,'advmParamStruct',advmParamStruct);
 setappdata(handles.figure1,'max_time_min', 5);
 setappdata(handles.figure1,'trans_vars',{});

@@ -28,7 +28,8 @@ trans = [];
 trans_var = {};
 
 % get the variable names
-ModelVarNames   = matchedDS.Properties.VarNames;
+% ModelVarNames   = matchedDS.Properties.VarNames;
+ModelVarNames   = matchedDS.Properties.VariableNames;
 
 % remove banned variable names
 for k = length(ModelVarNames):-1:1    

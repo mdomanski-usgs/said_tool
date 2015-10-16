@@ -58,9 +58,16 @@ bVIF = 13-(aVIF+3);
 % get the 'disp' output of the LinearModel object
 mdlTxt = evalc('disp(mdl)');
 
+mdlTxt = strrep(mdlTxt,'<strong>','');
+mdlTxt = strrep(mdlTxt,'</strong>','');
+
 % break up the 'disp' output by newline characters
 mdlTxt = textscan(mdlTxt, '%s', 'Delimiter', '\n');
 mdlTxt = mdlTxt{1};
+
+% mdlTxt{6} = [];
+mdlTxt(7) = [];
+mdlTxt(7) = [];
 
 % set the new equation to the formatted
 mdlTxt{3} = mdlEqn;
@@ -70,7 +77,7 @@ mdlTxt{5} = 'Estimated Model Coefficients';
 % add lower and upper bound to the header
 mdlTxt{6} = ['               ' mdlTxt{6} ...
     repmat(' ',1,aL90) ' Lower90%' repmat(' ',1,bL90+aU90)...
-    ' Upper90%' repmat(' ',1,bU90)];    
+    ' Upper90%' repmat(' ',1,bU90)];
 
 % add the coefficients with confidence intervals to the output
 for k = 0:length(Coeff)-1
@@ -130,9 +137,18 @@ function r = get_corr_coeff(mdl)
 iObs = ~(mdl.ObservationInfo.Missing | mdl.ObservationInfo.Excluded);
 
 if mdl.NumPredictors == 1
+%     
+%     X = double(mdl.Variables(iObs,mdl.PredictorNames{1}));
+%     Y = double(mdl.Variables(iObs,mdl.ResponseName));
     
-    X = double(mdl.Variables(iObs,mdl.PredictorNames{1}));
-    Y = double(mdl.Variables(iObs,mdl.ResponseName));
+%     X = table2dataset(mdl.Variables(iObs,mdl.PredictorNames{1}));
+%     Y = table2dataset(mdl.Variables(iObs,mdl.ResponseName));
+    
+%     X = double(X);
+%     Y = double(Y);
+    
+    X = table2array(mdl.Variables(iObs,mdl.PredictorNames{1}));
+    Y = table2array(mdl.Variables(iObs,mdl.ResponseName));
     
     Xmean = mean(X);
     Ymean = mean(Y);

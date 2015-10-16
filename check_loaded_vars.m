@@ -7,7 +7,8 @@ overwrite_obs = [];
 loaded_var_names = fieldnames( loaded_vars );
 
 % get the names of the newly loaded dataset
-newDS_var_names = get(newDS, 'VarNames');
+% newDS_var_names = get(newDS, 'VarNames');
+newDS_var_names = newDS.Properties.VariableNames;
 
 % query string to use for user dialog
 qstring = ['New variable observations conflict with previously ' ...

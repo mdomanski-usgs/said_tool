@@ -22,9 +22,11 @@ if all(FileName ~= 0) && all(PathName ~= 0)
     
     % load the dataset
     const_ds = dataset('File',ConstDSName);
+    const_ds = dataset2table(const_ds);
     
     % get a cell string of variable names
-    ConstDSVarNames = get(const_ds,'VarNames');
+%     ConstDSVarNames = get(const_ds,'VarNames');
+    ConstDSVarNames = const_ds.Properties.VariableNames;
     
     % if all date/time information is present
     if (any(strcmp('y',ConstDSVarNames)) && ...

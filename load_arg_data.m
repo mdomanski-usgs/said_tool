@@ -386,6 +386,7 @@ fclose(fid);
 advmDSCell(2:end,:) = num2cell([datMatrix snrMatrix]);
 
 advmDS = cell2dataset(advmDSCell);
+advmDS = dataset2table(advmDS);
 
 end
 
