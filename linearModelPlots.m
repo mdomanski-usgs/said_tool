@@ -448,6 +448,7 @@ maxPred = max(mdl.Variables.(mdl.PredictorNames{1}));
 
 % create a dataset for the predictor plot values
 xDS = dataset({linspace(minPred,maxPred)',mdl.PredictorNames{1}});
+xDS = dataset2table(xDS); % added for 2014a - MMD 20151015
 
 % get the observed predictor variable values
 XObs = f_inv_pred(mdl.Variables.(mdl.PredictorNames{1}));
@@ -647,8 +648,8 @@ end
 iIncluded = ~(mdl.ObservationInfo.Missing | mdl.ObservationInfo.Excluded);
 
 % observation numbers
-ObsNums = 1:length(mdl.Variables);
-% ObsNums = 1:height(mdl.Variables); % changed for 2014a - MMD 20151015
+% ObsNums = 1:length(mdl.Variables);
+ObsNums = 1:height(mdl.Variables); % changed for 2014a - MMD 20151015
 ObsNums = ObsNums(iIncluded);
 
 % get the fitted response values
@@ -751,8 +752,8 @@ iIncluded = ~(mdl.ObservationInfo.Missing | mdl.ObservationInfo.Excluded);
 SmearedLineDS = smear_estimate(mdl,mdl.Variables);
 
 % observation numbers
-ObsNums = 1:length(mdl.Variables);
-% ObsNums = 1:length(mdl.Variables); % changed for 2014a - MMD 20151015
+% ObsNums = 1:length(mdl.Variables);
+ObsNums = 1:height(mdl.Variables); % changed for 2014a - MMD 20151015
 ObsNums = ObsNums(iIncluded);
 
 % get the fitted response values
