@@ -1,31 +1,31 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="1848682328" file="D:\Documents\MATLAB\said_tool\SAID.prj" location="D:\Documents\MATLAB\said_tool" name="SAID" preferred-package-location="D:\Documents\MATLAB\said_tool\SAID\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="MATLAB Compiler for Standalone Applications">
-    <param.appname>SAID</param.appname>
-    <param.icon>${PROJECT_ROOT}\SAID_resources\icon.ico</param.icon>
+  <configuration build-checksum="2040137404" file="D:\Documents\MATLAB\said_tool\said.prj" location="D:\Documents\MATLAB\said_tool" name="said" preferred-package-location="D:\Documents\MATLAB\said_tool\said\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="MATLAB Compiler for Standalone Applications">
+    <param.appname>said</param.appname>
+    <param.icon>${PROJECT_ROOT}\said_resources\icon.ico</param.icon>
     <param.icons>
-      <file>${PROJECT_ROOT}\SAID_resources\icon_48.png</file>
-      <file>${PROJECT_ROOT}\SAID_resources\icon_32.png</file>
-      <file>${PROJECT_ROOT}\SAID_resources\icon_24.png</file>
-      <file>${PROJECT_ROOT}\SAID_resources\icon_16.png</file>
+      <file>${PROJECT_ROOT}\said_resources\icon_48.png</file>
+      <file>${PROJECT_ROOT}\said_resources\icon_32.png</file>
+      <file>${PROJECT_ROOT}\said_resources\icon_24.png</file>
+      <file>${PROJECT_ROOT}\said_resources\icon_16.png</file>
     </param.icons>
     <param.version>1.0</param.version>
     <param.authnamewatermark>Marian Domanski</param.authnamewatermark>
     <param.email>mdomanski@usgs.gov</param.email>
-    <param.company>USGS Illinois Water Science Center</param.company>
+    <param.company>U.S. Geological Survey</param.company>
     <param.summary />
     <param.description />
-    <param.screenshot />
+    <param.screenshot>${PROJECT_ROOT}\said splash.png</param.screenshot>
     <param.guid />
-    <param.installpath.string>\USGS Illinois Water Science Center\SAID\</param.installpath.string>
+    <param.installpath.string>\U.S. Geological Survey\said\</param.installpath.string>
     <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
-    <param.logo />
+    <param.logo>${PROJECT_ROOT}\said logo.png</param.logo>
     <param.install.notes />
-    <param.intermediate>${PROJECT_ROOT}\SAID\for_testing</param.intermediate>
-    <param.output>${PROJECT_ROOT}\SAID\for_redistribution</param.output>
+    <param.intermediate>${PROJECT_ROOT}\said\for_testing</param.intermediate>
+    <param.output>${PROJECT_ROOT}\said\for_redistribution</param.output>
     <param.user.defined.mcr.options />
     <param.embed.ctf>true</param.embed.ctf>
-    <param.server.ctf>${PROJECT_ROOT}\SAID\for_testing\.ctf</param.server.ctf>
-    <param.server.readme>${PROJECT_ROOT}\SAID\for_testing\readme.txt</param.server.readme>
+    <param.server.ctf>${PROJECT_ROOT}\said\for_testing\.ctf</param.server.ctf>
+    <param.server.readme>${PROJECT_ROOT}\said\for_testing\readme.txt</param.server.readme>
     <param.target.type>subtarget.standalone</param.target.type>
     <param.support.packages />
     <param.web.mcr>true</param.web.mcr>
@@ -35,21 +35,20 @@
     <param.package.mcr.name>SAIDInstaller_mcr</param.package.mcr.name>
     <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
     <param.windows.command.prompt>true</param.windows.command.prompt>
-    <param.create.log>true</param.create.log>
+    <param.create.log>false</param.create.log>
     <param.log.file>said_log.txt</param.log.file>
     <unset>
       <param.version />
+      <param.authnamewatermark />
+      <param.email />
       <param.summary />
       <param.description />
-      <param.screenshot />
       <param.guid />
       <param.installpath.string />
       <param.installpath.combo />
-      <param.logo />
       <param.install.notes />
       <param.intermediate />
       <param.output />
-      <param.user.defined.mcr.options />
       <param.embed.ctf />
       <param.server.ctf />
       <param.server.readme />
@@ -59,6 +58,7 @@
       <param.no.mcr />
       <param.no.mcr.name />
       <param.windows.command.prompt />
+      <param.create.log />
     </unset>
     <fileset.main>
       <file>${PROJECT_ROOT}\said.m</file>
@@ -100,13 +100,13 @@
     </fileset.resources>
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\SAID\for_testing" name="splash.png" optional="false">D:\Documents\MATLAB\said_tool\SAID\for_testing\splash.png</file>
-      <file location="${PROJECT_ROOT}\SAID\for_testing" name="SAID.exe" optional="false">D:\Documents\MATLAB\said_tool\SAID\for_testing\SAID.exe</file>
-      <file location="${PROJECT_ROOT}\SAID\for_testing" name="readme.txt" optional="true">D:\Documents\MATLAB\said_tool\SAID\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\said\for_testing" name="splash.png" optional="false">D:\Documents\MATLAB\said_tool\said\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\said\for_testing" name="said.exe" optional="false">D:\Documents\MATLAB\said_tool\said\for_testing\said.exe</file>
+      <file location="${PROJECT_ROOT}\said\for_testing" name="readme.txt" optional="true">D:\Documents\MATLAB\said_tool\said\for_testing\readme.txt</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>C:\Program Files (x86)\MATLAB\R2014a</root>
+      <root>C:\Program Files\MATLAB\R2014a</root>
       <toolboxes />
     </matlab>
     <platform>

@@ -52,11 +52,14 @@ catch err
         'Unexpected Error',...
         'error');
     
+    [major, minor] = mcrversion;
+    
     if isdeployed
         errLogFileName = fullfile(CWD,...
             ['errorLog' datestr(now,'yyyymmddHHMMSS') '.txt']);
         fid = fopen(errLogFileName,'W');
-        fprintf(fid,'v20150805 beta\n');
+        fprintf(fid,'SAID v 1.0\n');
+        fprintf(fid,['MCR version ' num2str(major) '.' num2str(minor) '\n']);
         fwrite(fid,err.getReport('extended','hyperlinks','off'));
         fclose(fid);
     else
