@@ -54,6 +54,10 @@ if exist(saidStateFullFile,'file')
             end
         end
         
+        if ~isdir(S.CWD)
+            S.CWD = getenv('USERPROFILE');
+        end
+        
         % set current session global variables
         setappdata(handles.figure1,'advmParamStruct', S.advmParamStruct);
         setappdata(handles.figure1,'loaded_var_struct', S.loaded_var_struct);

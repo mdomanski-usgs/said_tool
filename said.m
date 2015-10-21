@@ -38,6 +38,7 @@ end
 
 CWD = pwd;
 
+
 try
     
     if nargout
@@ -87,13 +88,14 @@ advmParamStruct = default_advm_param_struct();
 % const_ds = dataset();
 const_ds = table();
 matched_ds = table();
+CWD = getenv('USERPROFILE');
 
 version = '1.0';
 
 % set initial values
 setappdata(hObject,'advmParamStruct',advmParamStruct);
 setappdata(hObject,'loaded_var_struct',struct);
-setappdata(hObject,'CWD',pwd);
+setappdata(hObject,'CWD',CWD);
 setappdata(hObject,'surr_full_file',{});
 setappdata(hObject,'const_full_file',{});
 setappdata(hObject,'trans_vars',{});
