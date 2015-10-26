@@ -54,6 +54,9 @@ for k = 1:mdl.NumPredictors
             rootValue = str2double(mdl.ResponseName(5));
             LinearPredictorName = PredictorName(6:end);
             f_pred = @(x) root(x,rootValue);
+        else
+            LinearPredictorName = PredictorName;
+            f_pred = @(x) x;
         end
         
 %         if ismember(LinearPredictorName,PredDS.Properties.VarNames)

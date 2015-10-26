@@ -448,6 +448,7 @@ maxPred = max(mdl.Variables.(mdl.PredictorNames{1}));
 
 % create a dataset for the predictor plot values
 xDS = dataset({linspace(minPred,maxPred)',mdl.PredictorNames{1}});
+xDS = dataset2table(xDS);
 
 % get the observed predictor variable values
 XObs = f_inv_pred(mdl.Variables.(mdl.PredictorNames{1}));
@@ -727,7 +728,7 @@ else
     h = figure;
 end
 
-mdlVariables = table2dataset(mdl.Variables);
+% mdlVariables = table2dataset(mdl.Variables);
 
 if strfind(mdl.ResponseName,'log10')==1
     ResponseName = strrep(mdl.ResponseName,'log10','');
@@ -752,19 +753,20 @@ end
 iIncluded = ~(mdl.ObservationInfo.Missing | mdl.ObservationInfo.Excluded);
 
 % call smearing function
-% SmearedLineDS = smear_estimate(mdl,mdl.Variables);
-SmearedLineDS = smear_estimate(mdl,mdlVariables);
+SmearedLineDS = smear_estimate(mdl,mdl.Variables);
+% SmearedLineDS = smear_estimate(mdl,mdlVariables);
 
 % observation numbers
-ObsNums = 1:length(mdlVariables);
-% ObsNums = 1:length(mdl.Variables); % changed for 2014a - MMD 20151015
+% ObsNums = 1:length(mdlVariables);
+ObsNums = 1:height(mdl.Variables); % changed for 2014a - MMD 20151015
 ObsNums = ObsNums(iIncluded);
 
 % get the fitted response values
 YPred = SmearedLineDS.(ResponseName)(iIncluded);
 
 % get the observed response values
-YObs = f_inv(mdlVariables.(mdl.ResponseName)(iIncluded));
+% YObs = f_inv(mdlVariables.(mdl.ResponseName)(iIncluded));
+YObs = f_inv(mdl.Variables.(mdl.ResponseName)(iIncluded));
 
 % plot the predicted values against the observed values
 plot(YObs,YPred,'bx');

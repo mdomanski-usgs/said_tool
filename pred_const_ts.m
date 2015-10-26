@@ -159,5 +159,6 @@ end
 col_names = [{'DateTime'} loaded_var_names'];
 
 loaded_var_ds = dataset([var_array col_names]);
+loaded_var_ds = dataset2table(loaded_var_ds);
 
 end % lvs_to_ds

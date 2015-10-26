@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="1651873742" file="D:\Documents\MATLAB\said_tool\said.prj" location="D:\Documents\MATLAB\said_tool" name="said" preferred-package-location="D:\Documents\MATLAB\said_tool\said\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="MATLAB Compiler for Standalone Applications">
+  <configuration build-checksum="2986640077" file="D:\Documents\MATLAB\said_tool\said.prj" location="D:\Documents\MATLAB\said_tool" name="said" preferred-package-location="D:\Documents\MATLAB\said_tool\said\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="MATLAB Compiler for Standalone Applications">
     <param.appname>said</param.appname>
     <param.icon>${PROJECT_ROOT}\said_resources\icon.ico</param.icon>
     <param.icons>

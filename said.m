@@ -36,7 +36,13 @@ if nargin && ischar(varargin{1})
     gui_State.gui_Callback = str2func(varargin{1});
 end
 
-CWD = pwd;
+default_install_dir = [getenv('PROGRAMFILES') '\U.S. Geological Survey\said'];
+
+if isdir(default_install_dir)
+    CWD = default_install_dir;
+else
+    CWD = getenv('USERPROFILE');
+end
 
 
 try
@@ -57,7 +63,7 @@ catch err
     
     if isdeployed
         errLogFileName = fullfile(CWD,...
-            ['errorLog' datestr(now,'yyyymmddHHMMSS') '.txt']);
+            ['SAIDerrorLog' datestr(now,'yyyymmddHHMMSS') '.txt']);
         fid = fopen(errLogFileName,'W');
         fprintf(fid,'SAID v 1.0\n');
         fprintf(fid,['MCR version ' num2str(major) '.' num2str(minor) '\n']);
@@ -593,6 +599,7 @@ if (ischar(FileName) || iscell(FileName)) && all(PathName ~= 0)
         
         % if the file name is valid, write the time series to a
         % tab-delimited file
+        EstDS = table2dataset(EstDS);
         if FileName ~= 0
             export(EstDS,'file',fullfile(PathName,FileName),'Delimiter','\t');
         end
