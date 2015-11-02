@@ -95,10 +95,16 @@ end
 
 if ~isempty(strfind(mdl.ResponseName,'log10'))
     BCF = nansum(10.^(mdl.Residuals.Raw))/mdl.NumObservations;
+    RMSE_pct = 100*sqrt(exp(log(10)^2*mdl.MSE) - 1);
+    mdlTxt{end+1} = ' ';
+    mdlTxt{end+1} = ['RMSE(%): ' num2str(RMSE_pct)];
     mdlTxt{end+1} = ' ';
     mdlTxt{end+1} = ['Non-parametric smearing bias correction factor: ' num2str(BCF)];
 elseif ~isempty(strfind(mdl.ResponseName,'ln'))
     BCF = nansum(exp(mdl.Residuals.Raw))/mdl.NumObservations;
+    RMSE_pct = 100*sqrt(exp(mdl.MSE) - 1);
+    mdlTxt{end+1} = ' ';
+    mdlTxt{end+1} = ['RMSE(%): ' num2str(RMSE_pct)];
     mdlTxt{end+1} = ' ';
     mdlTxt{end+1} = ['Non-parametric smearing bias correction factor: ' num2str(BCF)];
 end

@@ -99,7 +99,7 @@ loaded_var_struct = getappdata(handles.figure1,'loaded_var_struct');
 advm_param_struct = getappdata(handles.figure1,'advmParamStruct');
 
 % initialize busy dialog
-h = said_busy_dialog(handles.figure1, 'Processing', 'Processing AVDM Data');
+h = said_busy_dialog(handles.figure1, 'Processing', 'Processing ADVM Data');
 
 % process the advm variables
 loaded_var_struct = proc_advm_vars(loaded_var_struct,advm_param_struct);
