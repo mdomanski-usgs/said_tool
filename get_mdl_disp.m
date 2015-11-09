@@ -58,6 +58,10 @@ bVIF = 13-(aVIF+3);
 % get the 'disp' output of the LinearModel object
 mdlTxt = evalc('disp(mdl)');
 
+% added for 2014a - MMD 20151015
+mdlTxt = strrep(mdlTxt,'<strong>','');
+mdlTxt = strrep(mdlTxt,'</strong>','');
+
 % break up the 'disp' output by newline characters
 mdlTxt = textscan(mdlTxt, '%s', 'Delimiter', '\n');
 mdlTxt = mdlTxt{1};
@@ -131,8 +135,12 @@ iObs = ~(mdl.ObservationInfo.Missing | mdl.ObservationInfo.Excluded);
 
 if mdl.NumPredictors == 1
     
-    X = double(mdl.Variables(iObs,mdl.PredictorNames{1}));
-    Y = double(mdl.Variables(iObs,mdl.ResponseName));
+    % added for 2014a - MMD 20151015
+    X = table2dataset(mdl.Variables(iObs,mdl.PredictorNames{1}));
+    Y = table2dataset(mdl.Variables(iObs,mdl.ResponseName));
+    
+    X = double(X);
+    Y = double(Y);
     
     Xmean = mean(X);
     Ymean = mean(Y);
