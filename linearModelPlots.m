@@ -757,7 +757,6 @@ SmearedLineDS = smear_estimate(mdl,mdl.Variables);
 % SmearedLineDS = smear_estimate(mdl,mdlVariables);
 
 % observation numbers
-% ObsNums = 1:length(mdlVariables);
 ObsNums = 1:height(mdl.Variables); % changed for 2014a - MMD 20151015
 ObsNums = ObsNums(iIncluded);
 

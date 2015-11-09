@@ -58,6 +58,7 @@ bVIF = 13-(aVIF+3);
 % get the 'disp' output of the LinearModel object
 mdlTxt = evalc('disp(mdl)');
 
+% added for 2014a - MMD 20151015
 mdlTxt = strrep(mdlTxt,'<strong>','');
 mdlTxt = strrep(mdlTxt,'</strong>','');
 
