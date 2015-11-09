@@ -36,7 +36,14 @@ if nargin && ischar(varargin{1})
     gui_State.gui_Callback = str2func(varargin{1});
 end
 
-CWD = pwd;
+default_install_dir = [getenv('PROGRAMFILES') '\U.S. Geological Survey\said'];
+
+if isdir(default_install_dir)
+    CWD = default_install_dir;
+else
+    CWD = getenv('USERPROFILE');
+end
+
 
 try
     
@@ -52,11 +59,14 @@ catch err
         'Unexpected Error',...
         'error');
     
+    [major, minor] = mcrversion;
+    
     if isdeployed
         errLogFileName = fullfile(CWD,...
-            ['errorLog' datestr(now,'yyyymmddHHMMSS') '.txt']);
+            ['SAIDerrorLog' datestr(now,'yyyymmddHHMMSS') '.txt']);
         fid = fopen(errLogFileName,'W');
-        fprintf(fid,'v20150805 beta\n');
+        fprintf(fid,'SAID v 1.0\n');
+        fprintf(fid,['MCR version ' num2str(major) '.' num2str(minor) '\n']);
         fwrite(fid,err.getReport('extended','hyperlinks','off'));
         fclose(fid);
     else
@@ -81,21 +91,25 @@ handles.output = hObject;
 % initialize the default empty advm parameter structure
 advmParamStruct = default_advm_param_struct();
 
-const_ds = dataset();
+% const_ds = dataset();
+const_ds = table();
+matched_ds = table();
+CWD = getenv('USERPROFILE');
 
 version = '1.0';
 
 % set initial values
 setappdata(hObject,'advmParamStruct',advmParamStruct);
 setappdata(hObject,'loaded_var_struct',struct);
-setappdata(hObject,'CWD',pwd);
+setappdata(hObject,'CWD',CWD);
 setappdata(hObject,'surr_full_file',{});
 setappdata(hObject,'const_full_file',{});
 setappdata(hObject,'trans_vars',{});
 setappdata(hObject,'max_time_min',5);
 setappdata(hObject,'bsPlotsFigNum',50);
 setappdata(hObject,'const_ds',const_ds);
-setappdata(hObject,'matched_ds',dataset());
+% setappdata(hObject,'matched_ds',dataset());
+setappdata(hObject,'matched_ds',matched_ds);
 setappdata(hObject,'ExcludeDates',[]);
 setappdata(hObject,'version', version);
 setappdata(hObject,'session_name','New');
@@ -381,7 +395,8 @@ if ~isempty(matched_ds)
         trans_var_name = [trans_var{2} trans_var{1}];
         
         % if the new variable name isn't already in the matched dataset
-        if ~any(strcmp(trans_var_name,get(matched_ds,'VarNames')))
+%         if ~any(strcmp(trans_var_name,get(matched_ds,'VarNames')))
+        if ~any(strcmp(trans_var_name,matched_ds.Properties.VariableNames))
             
             % add the new transformed variable to the global list of
             % transformations
@@ -584,6 +599,7 @@ if (ischar(FileName) || iscell(FileName)) && all(PathName ~= 0)
         
         % if the file name is valid, write the time series to a
         % tab-delimited file
+        EstDS = table2dataset(EstDS);
         if FileName ~= 0
             export(EstDS,'file',fullfile(PathName,FileName),'Delimiter','\t');
         end
@@ -650,7 +666,8 @@ loaded_var_struct = getappdata(handles.figure1,'loaded_var_struct');
 const_ds = getappdata(handles.figure1,'const_ds');
 
 var_struct_names = fieldnames(loaded_var_struct);
-const_var_names = get(const_ds,'VarNames');
+% const_var_names = get(const_ds,'VarNames');
+const_var_names = const_ds.Properties.VariableNames;
 
 
 % if data was loaded
@@ -689,8 +706,10 @@ function SAIDNew_pushbutton_Callback(hObject, eventdata, handles)
 % get the default advm parameter structure
 advmParamStruct = default_advm_param_struct();
 
+matched_ds = table();
+
 % clear global variables and set to default values
-setappdata(handles.figure1,'matched_ds',dataset());
+setappdata(handles.figure1,'matched_ds',matched_ds);
 setappdata(handles.figure1,'advmParamStruct',advmParamStruct);
 setappdata(handles.figure1,'max_time_min', 5);
 setappdata(handles.figure1,'trans_vars',{});

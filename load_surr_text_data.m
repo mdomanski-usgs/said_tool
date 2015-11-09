@@ -41,12 +41,14 @@ if (ischar(FileName) || iscell(FileName)) && all(PathName ~= 0)
         
         % load the dataset
         newDS = dataset('File',newDSName);
+        newDS = dataset2table(newDS);
         
         % format the date/time variable
         newDS = formatDSDate(newDS);
         
         % get a cell string of variable names
-        newDSVarNames = get(newDS,'VarNames');
+%         newDSVarNames = get(newDS,'VarNames');
+        newDSVarNames = newDS.Properties.VariableNames;
         
         % if all date/time is present
         if any(strcmp('DateTime',newDSVarNames))

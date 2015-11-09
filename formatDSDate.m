@@ -3,7 +3,8 @@ function oDS = formatDSDate(iDS)
 % create a copy for the output data set
 oDS = iDS;
 
-ds_var_names = get(iDS,'VarNames');
+% ds_var_names = get(iDS,'VarNames');
+ds_var_names = iDS.Properties.VariableNames;
 
 % if the date/information is in columns
 if (any(strcmp('y',ds_var_names)) && ...

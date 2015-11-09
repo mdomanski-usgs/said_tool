@@ -4,7 +4,8 @@ function loaded_var_struct = combine_loaded_vars( loaded_var_struct, newDS, over
 loaded_var_names = fieldnames(loaded_var_struct);
 
 % get the names of the newly loaded dataset
-new_var_names = get(newDS,'VarNames');
+% new_var_names = get(newDS,'VarNames');
+new_var_names = newDS.Properties.VariableNames;
 
 % if the overwrite observation flag is empty, assume the user hasn't been
 % prompted, and set it to false

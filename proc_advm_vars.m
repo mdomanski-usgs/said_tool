@@ -287,6 +287,8 @@ advm_ds = dataset(...
     {Vbeam,     'Vbeam'}...
     );
 
+advm_ds = dataset2table(advm_ds);
+
 
 function procAdvmDS = proc_advmDS(advmDS, advmParamStruct)
 
@@ -517,5 +519,7 @@ procAdvmDS = dataset(...
     {alphaS,                'alphaS'    },...
     {MeanSCB,               'MeanSCB'   } ...
     );
+
+procAdvmDS = dataset2table(procAdvmDS);
 
 

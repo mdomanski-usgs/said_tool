@@ -31,12 +31,14 @@ for i = 1:length(FileName)
     % load the dataset
     ds_name = fullfile(PathName,FileName{i});
     ds = dataset('File',ds_name);
+    ds = dataset2table(ds);
     
     % convert the date/time to a MATLAB serial number
     ds = formatDSDate(ds);
     
     % get the variable names in the dataset
-    ds_var_names = get(ds,'VarNames');
+%     ds_var_names = get(ds,'VarNames');
+    ds_var_names = ds.Properties.VariableNames;
     
     % if the date/time index is found in the newly loaded dataset, load
     % add the variables to the loaded variable structure
@@ -157,5 +159,6 @@ end
 col_names = [{'DateTime'} loaded_var_names'];
 
 loaded_var_ds = dataset([var_array col_names]);
+loaded_var_ds = dataset2table(loaded_var_ds);
 
 end % lvs_to_ds

@@ -66,6 +66,10 @@ mdlTxt = strrep(mdlTxt,'</strong>','');
 mdlTxt = textscan(mdlTxt, '%s', 'Delimiter', '\n');
 mdlTxt = mdlTxt{1};
 
+% mdlTxt{6} = [];
+mdlTxt(7) = [];
+mdlTxt(7) = [];
+
 % set the new equation to the formatted
 mdlTxt{3} = mdlEqn;
 
@@ -74,7 +78,7 @@ mdlTxt{5} = 'Estimated Model Coefficients';
 % add lower and upper bound to the header
 mdlTxt{6} = ['               ' mdlTxt{6} ...
     repmat(' ',1,aL90) ' Lower90%' repmat(' ',1,bL90+aU90)...
-    ' Upper90%' repmat(' ',1,bU90)];    
+    ' Upper90%' repmat(' ',1,bU90)];
 
 % add the coefficients with confidence intervals to the output
 for k = 0:length(Coeff)-1
@@ -92,10 +96,16 @@ end
 
 if ~isempty(strfind(mdl.ResponseName,'log10'))
     BCF = nansum(10.^(mdl.Residuals.Raw))/mdl.NumObservations;
+    RMSE_pct = 100*sqrt(exp(log(10)^2*mdl.MSE) - 1);
+    mdlTxt{end+1} = ' ';
+    mdlTxt{end+1} = ['RMSE(%): ' num2str(RMSE_pct)];
     mdlTxt{end+1} = ' ';
     mdlTxt{end+1} = ['Non-parametric smearing bias correction factor: ' num2str(BCF)];
 elseif ~isempty(strfind(mdl.ResponseName,'ln'))
     BCF = nansum(exp(mdl.Residuals.Raw))/mdl.NumObservations;
+    RMSE_pct = 100*sqrt(exp(mdl.MSE) - 1);
+    mdlTxt{end+1} = ' ';
+    mdlTxt{end+1} = ['RMSE(%): ' num2str(RMSE_pct)];
     mdlTxt{end+1} = ' ';
     mdlTxt{end+1} = ['Non-parametric smearing bias correction factor: ' num2str(BCF)];
 end
@@ -134,13 +144,18 @@ function r = get_corr_coeff(mdl)
 iObs = ~(mdl.ObservationInfo.Missing | mdl.ObservationInfo.Excluded);
 
 if mdl.NumPredictors == 1
+%     
+%     X = double(mdl.Variables(iObs,mdl.PredictorNames{1}));
+%     Y = double(mdl.Variables(iObs,mdl.ResponseName));
     
-    % added for 2014a - MMD 20151015
-    X = table2dataset(mdl.Variables(iObs,mdl.PredictorNames{1}));
-    Y = table2dataset(mdl.Variables(iObs,mdl.ResponseName));
+%     X = table2dataset(mdl.Variables(iObs,mdl.PredictorNames{1}));
+%     Y = table2dataset(mdl.Variables(iObs,mdl.ResponseName));
     
-    X = double(X);
-    Y = double(Y);
+%     X = double(X);
+%     Y = double(Y);
+    
+    X = table2array(mdl.Variables(iObs,mdl.PredictorNames{1}));
+    Y = table2array(mdl.Variables(iObs,mdl.ResponseName));
     
     Xmean = mean(X);
     Ymean = mean(Y);

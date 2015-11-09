@@ -99,7 +99,7 @@ loaded_var_struct = getappdata(handles.figure1,'loaded_var_struct');
 advm_param_struct = getappdata(handles.figure1,'advmParamStruct');
 
 % initialize busy dialog
-h = said_busy_dialog(handles.figure1, 'Processing', 'Processing AVDM Data');
+h = said_busy_dialog(handles.figure1, 'Processing', 'Processing ADVM Data');
 
 % process the advm variables
 loaded_var_struct = proc_advm_vars(loaded_var_struct,advm_param_struct);
@@ -127,7 +127,8 @@ const_trans_vars = {};
 surr_trans_vars = {};
 
 % get the constituent variable names
-const_vars = get(const_ds,'VarNames');
+% const_vars = get(const_ds,'VarNames');
+const_vars = const_ds.Properties.VariableNames;
 
 % get the surrogate variable names
 surr_vars = fieldnames(loaded_var_struct);
@@ -180,7 +181,8 @@ if ~isempty(fieldnames(loaded_var_struct)) || ...
 else
     
     % otherwise set matched dataset to empty
-    matched_ds = dataset();
+%     matched_ds = dataset();
+    matched_ds = table();
     
 end
 
@@ -214,7 +216,8 @@ ResponseVar = ...
 if ~isempty(matched_ds)
     
     mdlDS = matched_ds;
-    mdlDSVarNames = mdlDS.Properties.VarNames;
+%     mdlDSVarNames = mdlDS.Properties.VarNames;
+    mdlDSVarNames = mdlDS.Properties.VariableNames;
     
     % if the predictor and response variables aren't empty and are valid
     if (~isempty(PredictorVars) && ~isempty(ResponseVar))   && ...
@@ -295,10 +298,12 @@ else
 end
 
 % get the variable names from the constituent dataset
-const_var_names = get(const_ds,'VarNames');
+% const_var_names = get(const_ds,'VarNames');
+const_var_names = const_ds.Properties.VariableNames;
 
 % get the variable names from the matched dataset
-surr_var_names = get(matched_ds,'VarNames');
+% surr_var_names = get(matched_ds,'VarNames');
+surr_var_names = matched_ds.Properties.VariableNames;
 
 % for i = 1:size(trans_vars,1)
 %     
@@ -428,7 +433,8 @@ advm_vars = { ...
     'SNR2'       ...
     };
 
-master_vars = get(master_ds,'VarNames');
+% master_vars = get(master_ds,'VarNames');
+master_vars = master_ds.Properties.VariableNames;
 
 % convert max_time_min from minutes to MATLAB date serial number
 max_time_sn = datenum([0 0 0 0 max_time_min 0]);
@@ -458,11 +464,12 @@ for i = 1:length(loaded_var_names)
     if ~any([kAmp;kSNR;kadvm;kmvar])
         
         % initialize variable observations to nan
-        matched_ds.(var_name) = nan(length(matched_ds),...
+%         matched_ds.(var_name) = nan(length(matched_ds),...
+        matched_ds.(var_name) = nan(height(matched_ds),...
             size(loaded_var_struct.(var_name).(var_name),2));
         
         % for every observation in the matched dataset
-        for j = 1:length(matched_ds)
+        for j = 1:height(matched_ds)
             
             % find the value and index of the minimum absolute time
             % difference

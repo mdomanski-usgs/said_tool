@@ -33,7 +33,8 @@ else
 end
 
 % figure position values
-FigPosH = 400;
+% FigPosH = 400;
+FigPosH = 450;
 FigPosX = (mainFigPos(1)+mainFigPos(3)/2) - FigPosW/2;
 FigPosY = (mainFigPos(2)+mainFigPos(4)/2) - FigPosH/2;
 FigPos = [FigPosX FigPosY FigPosW FigPosH];
