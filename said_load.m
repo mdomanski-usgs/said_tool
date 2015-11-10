@@ -1,13 +1,4 @@
-function said_load( handles )
-
-% get the current working directory
-CWD = getappdata(handles.figure1,'CWD');
-
-% prompt user to select a mat file to load
-[saidStateMat,PathName] = uigetfile(fullfile(CWD,'*.mat'));
-
-% get the full file name
-saidStateFullFile = fullfile(PathName,saidStateMat);
+function said_load( handles, saidStateFullFile )
 
 % if the file exists
 if exist(saidStateFullFile,'file')
@@ -61,7 +52,7 @@ if exist(saidStateFullFile,'file')
         % set current session global variables
         setappdata(handles.figure1,'advmParamStruct', S.advmParamStruct);
         setappdata(handles.figure1,'loaded_var_struct', S.loaded_var_struct);
-        setappdata(handles.figure1,'CWD', S.CWD);
+%         setappdata(handles.figure1,'CWD', S.CWD);
         setappdata(handles.figure1,'surr_full_file', S.surr_full_file);
         setappdata(handles.figure1,'const_full_file', S.const_full_file);
         setappdata(handles.figure1,'trans_vars', S.trans_vars);
@@ -89,7 +80,6 @@ if exist(saidStateFullFile,'file')
         
     end
     
-    % set the current working directory to the path name chosen by the user
-    setappdata(handles.figure1,'CWD',PathName);
+
     
 end

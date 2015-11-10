@@ -1,18 +1,21 @@
-function data_loaded = load_const_text_data(ConstDSName, handles)
+function data_loaded = load_const_text_data(handles)
 
 % get the global loaded file name list
-% const_full_file = getappdata(handles.figure1,'const_full_file');
-
-[PathName,NAME,EXT] = fileparts(ConstDSName);
-FileName = [NAME EXT];
+const_full_file = getappdata(handles.figure1,'const_full_file');
 
 trans_vars = getappdata(handles.figure1,'trans_vars');
 loaded_var_struct = getappdata(handles.figure1,'loaded_var_struct');
 var_struct_names = fieldnames(loaded_var_struct);
 
+
+% prompt user for file to load
+[FileName,PathName,~] = uigetfile(FilterSpec);
+
+% put together the path and file names
+ConstDSName = fullfile(PathName,FileName);
+
 % if the path and file names are successfully returned
-% if all(FileName ~= 0) && all(PathName ~= 0)
-if exist(ConstDSName,'file') == 2
+if all(FileName ~= 0) && all(PathName ~= 0)
     
     h = said_busy_dialog(handles.figure1,'Loading', 'Loading surrogate data...');
     
