@@ -617,7 +617,7 @@ function LoadArgData_pushbutton_Callback(hObject, eventdata, handles)
 
 CWD = getappdata(handles.figure1,'CWD');
 
-argFnames = get_arg_fames(CWD);
+argFnames = get_arg_fnames(CWD);
 
 % call function to load argonaut data and get data loaded flag
 data_loaded = load_arg_data(argFnames, handles);

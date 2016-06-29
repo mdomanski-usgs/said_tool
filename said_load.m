@@ -28,22 +28,22 @@ if exist(saidStateFullFile,'file')
             'session_name' ...
             }))
         
-        if isa(S.const_ds,'dataset')
-            S.const_ds = dataset2table(S.const_ds);
-        end
+        %if isa(S.const_ds,'dataset')
+        %    S.const_ds = dataset2table(S.const_ds);
+        %end
         
-        if isa(S.matched_ds,'dataset')
-            S.matched_ds = dataset2table(S.matched_ds);
-        end
+        %if isa(S.matched_ds,'dataset')
+        %    S.matched_ds = dataset2table(S.matched_ds);
+        %end
         
-        ld_var_names = fieldnames(S.loaded_var_struct);
+        %ld_var_names = fieldnames(S.loaded_var_struct);
         
-        for i = 1:length(ld_var_names)
-            if isa(S.loaded_var_struct.(ld_var_names{i}),'dataset')
-                S.loaded_var_struct.(ld_var_names{i}) = ...
-                    dataset2table(S.loaded_var_struct.(ld_var_names{i}));
-            end
-        end
+        %for i = 1:length(ld_var_names)
+        %    if isa(S.loaded_var_struct.(ld_var_names{i}),'dataset')
+        %        S.loaded_var_struct.(ld_var_names{i}) = ...
+        %            dataset2table(S.loaded_var_struct.(ld_var_names{i}));
+        %    end
+        %end
         
         if ~isdir(S.CWD)
             S.CWD = getenv('USERPROFILE');
