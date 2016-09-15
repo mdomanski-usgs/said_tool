@@ -599,7 +599,7 @@ if (ischar(FileName) || iscell(FileName)) && all(PathName ~= 0)
         
         % if the file name is valid, write the time series to a
         % tab-delimited file
-        EstDS = table2dataset(EstDS);
+        % EstDS = table2dataset(EstDS);
         if FileName ~= 0
             export(EstDS,'file',fullfile(PathName,FileName),'Delimiter','\t');
         end

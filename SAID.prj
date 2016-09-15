@@ -1,0 +1,130 @@
+<deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
+  <configuration build-checksum="3543788265" file="D:\Documents\MATLAB\said_tool\SAID.prj" location="D:\Documents\MATLAB\said_tool" name="SAID" preferred-package-location="D:\Documents\MATLAB\said_tool\SAID\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="MATLAB Compiler for Standalone Applications">
+    <param.appname>SAID</param.appname>
+    <param.icon>${PROJECT_ROOT}\SAID_resources\icon.ico</param.icon>
+    <param.icons>
+      <file>${PROJECT_ROOT}\SAID_resources\icon_48.png</file>
+      <file>${PROJECT_ROOT}\SAID_resources\icon_32.png</file>
+      <file>${PROJECT_ROOT}\SAID_resources\icon_24.png</file>
+      <file>${PROJECT_ROOT}\SAID_resources\icon_16.png</file>
+    </param.icons>
+    <param.version>1.1</param.version>
+    <param.authnamewatermark>Marian Domanski</param.authnamewatermark>
+    <param.email>mdomanski@usgs.gov</param.email>
+    <param.company>US Geological Survey</param.company>
+    <param.summary />
+    <param.description />
+    <param.screenshot>${PROJECT_ROOT}\said splash.png</param.screenshot>
+    <param.guid />
+    <param.installpath.string>\US Geological Survey\SAID\</param.installpath.string>
+    <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
+    <param.logo>${PROJECT_ROOT}\said logo.png</param.logo>
+    <param.install.notes />
+    <param.intermediate>${PROJECT_ROOT}\SAID\for_testing</param.intermediate>
+    <param.output>${PROJECT_ROOT}\SAID\for_redistribution</param.output>
+    <param.user.defined.mcr.options />
+    <param.embed.ctf>true</param.embed.ctf>
+    <param.server.ctf>${PROJECT_ROOT}\SAID\for_testing\.ctf</param.server.ctf>
+    <param.server.readme>${PROJECT_ROOT}\SAID\for_testing\readme.txt</param.server.readme>
+    <param.target.type>subtarget.standalone</param.target.type>
+    <param.support.packages />
+    <param.web.mcr>true</param.web.mcr>
+    <param.package.mcr>true</param.package.mcr>
+    <param.no.mcr>false</param.no.mcr>
+    <param.web.mcr.name>SAIDInstaller_web</param.web.mcr.name>
+    <param.package.mcr.name>SAIDInstaller_mcr</param.package.mcr.name>
+    <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
+    <param.windows.command.prompt>true</param.windows.command.prompt>
+    <param.create.log>false</param.create.log>
+    <param.log.file />
+    <unset>
+      <param.authnamewatermark />
+      <param.email />
+      <param.summary />
+      <param.description />
+      <param.guid />
+      <param.installpath.string />
+      <param.installpath.combo />
+      <param.install.notes />
+      <param.intermediate />
+      <param.output />
+      <param.user.defined.mcr.options />
+      <param.embed.ctf />
+      <param.server.ctf />
+      <param.server.readme />
+      <param.target.type />
+      <param.support.packages />
+      <param.web.mcr />
+      <param.no.mcr />
+      <param.no.mcr.name />
+      <param.windows.command.prompt />
+      <param.create.log />
+      <param.log.file />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}\said.m</file>
+    </fileset.main>
+    <fileset.resources>
+      <file>${PROJECT_ROOT}\check_loaded_vars.m</file>
+      <file>${PROJECT_ROOT}\clear_const_data.m</file>
+      <file>${PROJECT_ROOT}\clear_surr_data.m</file>
+      <file>${PROJECT_ROOT}\combine_loaded_vars.m</file>
+      <file>${PROJECT_ROOT}\default_advm_param_struct.m</file>
+      <file>${PROJECT_ROOT}\editADVMConfig.fig</file>
+      <file>${PROJECT_ROOT}\editADVMConfig.m</file>
+      <file>${PROJECT_ROOT}\editADVMProc.fig</file>
+      <file>${PROJECT_ROOT}\editADVMProc.m</file>
+      <file>${PROJECT_ROOT}\findjobj.m</file>
+      <file>${PROJECT_ROOT}\formatDSDate.m</file>
+      <file>${PROJECT_ROOT}\get_arg_fnames.m</file>
+      <file>${PROJECT_ROOT}\get_mdl_disp.m</file>
+      <file>${PROJECT_ROOT}\linearModelPlots.fig</file>
+      <file>${PROJECT_ROOT}\linearModelPlots.m</file>
+      <file>${PROJECT_ROOT}\load_arg_data.m</file>
+      <file>${PROJECT_ROOT}\load_const_text_data.m</file>
+      <file>${PROJECT_ROOT}\load_surr_text_data.m</file>
+      <file>${PROJECT_ROOT}\pred_const_ts.m</file>
+      <file>${PROJECT_ROOT}\proc_advm_vars.m</file>
+      <file>${PROJECT_ROOT}\read_txt_lines.m</file>
+      <file>${PROJECT_ROOT}\said.fig</file>
+      <file>${PROJECT_ROOT}\said_busy_dialog.m</file>
+      <file>${PROJECT_ROOT}\said_load.m</file>
+      <file>${PROJECT_ROOT}\said_save.m</file>
+      <file>${PROJECT_ROOT}\show_BS_profile.m</file>
+      <file>${PROJECT_ROOT}\show_mdl_disp.m</file>
+      <file>${PROJECT_ROOT}\show_obs_table.m</file>
+      <file>${PROJECT_ROOT}\smear_estimate.m</file>
+      <file>${PROJECT_ROOT}\trans_ds_vars.m</file>
+      <file>${PROJECT_ROOT}\trans_struct_vars.m</file>
+      <file>${PROJECT_ROOT}\transform_var.m</file>
+      <file>${PROJECT_ROOT}\update.m</file>
+      <file>${PROJECT_ROOT}\write_report.m</file>
+    </fileset.resources>
+    <fileset.package />
+    <build-deliverables>
+      <file location="${PROJECT_ROOT}\SAID\for_testing" name="splash.png" optional="false">D:\Documents\MATLAB\said_tool\SAID\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\SAID\for_testing" name="SAID.exe" optional="false">D:\Documents\MATLAB\said_tool\SAID\for_testing\SAID.exe</file>
+      <file location="${PROJECT_ROOT}\SAID\for_testing" name="readme.txt" optional="true">D:\Documents\MATLAB\said_tool\SAID\for_testing\readme.txt</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2014a</root>
+      <toolboxes />
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>6.1</osver>
+      <os32>true</os32>
+      <os64>false</os64>
+      <arch>win32</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>

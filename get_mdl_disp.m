@@ -190,7 +190,8 @@ if mdl.NumPredictors > 1
         % against the other predictor variables
         vifmdl = LinearModel.fit(mdlDS,...
             'Response',mdl.PredictorNames{k},...
-            'PredictorVars',mdl.PredictorNames([1:k-1 k+1:mdl.NumPredictors]));
+            'PredictorVars',mdl.PredictorNames([1:k-1 k+1:mdl.NumPredictors]),...
+            'Exclude', (mdl.ObservationInfo.Missing | mdl.ObservationInfo.Excluded));
         
         % compute the variance inflation factor for the selected predictor
         % variable

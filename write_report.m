@@ -197,7 +197,8 @@ mdl = getappdata(handles.figure1,'mdl');
 % dateVarValue = getappdata(handles.figure1,'dateVarValue');
 
 % get the model variable dataset
-mdlDS = mdl.Variables;
+% mdlDS = mdl.Variables;
+mdlDS = table2dataset(mdl.Variables);
 
 
 % dateVarName = dateVarNames{dateVarValue-1};
@@ -219,8 +220,8 @@ mdlDSTxt = cell(size(mdlDS,1)+1,1);
 ObservationNumbers = (1:size(mdlDS,1))';
 % ObservationNumbers = ObservationNumbers(iObs);
 
-% mdlDSVarNames = mdlDS.Properties.VarNames;
-mdlDSVarNames = mdlDS.Properties.VariableNames;
+mdlDSVarNames = mdlDS.Properties.VarNames;
+% mdlDSVarNames = mdlDS.Properties.VariableNames;
 
 for k = 1:length(mdlDSVarNames)
 %     
@@ -245,8 +246,8 @@ mdlDS.(['Fitted' mdl.ResponseName]) = mdl.Fitted;
 % mdlDS.RawResiduals = mdl.Residuals.Raw(iObs);
 mdlDS.RawResiduals = mdl.Residuals.Raw;
 
-% mdlDS.NormalQuantile = nan(length(mdlDS),1);
-mdlDS.NormalQuantile = nan(height(mdlDS),1);
+mdlDS.NormalQuantile = nan(length(mdlDS),1);
+% mdlDS.NormalQuantile = nan(height(mdlDS),1);
 
 % if the response variable is transformed, get estimated values in
 % linear space
@@ -302,27 +303,27 @@ iObs = iObs(idx);
 iExcluded = iExcluded(idx);
 
 % get string representations of the data set
-% mdlDS = datasetfun(@(x)num2str(x,'%g'),mdlDS,'DatasetOutput',true);
+mdlDS = datasetfun(@(x)num2str(x,'%g'),mdlDS,'DatasetOutput',true);
 % mdlDS = rowfun(@(x)num2str(x,'%g'),mdlDS);
-mdlDS = varfun(@(x)num2str(x,'%g'),mdlDS);
+% mdlDS = varfun(@(x)num2str(x,'%g'),mdlDS);
 
 % remove 'Fun_' from the variable names that varfun adds for some reason...
-for i = 1:width(mdlDS)
-    
-    oldVarName = mdlDS.Properties.VariableNames{i};
-    newVarName = strrep(oldVarName,'Fun_','');
-   
-    mdlDS.Properties.VariableNames{oldVarName} = newVarName;
-    
-end
+% for i = 1:width(mdlDS)
+%     
+%     oldVarName = mdlDS.Properties.VarNames{i};
+%     newVarName = strrep(oldVarName,'Fun_','');
+%     
+%     mdlDS.Properties.VarNames{oldVarName} = newVarName;
+%     
+% end
 
 
 % get the number of data set variables
 nDSVars = size(mdlDS,2);
 
 % convert the data set to a cell array
-% mdlDScell = dataset2cell(mdlDS);
-mdlDScell = table2cell(mdlDS);
+mdlDScell = dataset2cell(mdlDS);
+% mdlDScell = table2cell(mdlDS);
 
 mdlDScell = strtrim(mdlDScell);
 
@@ -338,7 +339,8 @@ mdlDScell = [ ...
     ['Observation Number'; cellstr(num2str(ObservationNumbers))]...
     ['Missing'; cellstr(num2str(~iObs))]...
     ['Excluded'; cellstr(num2str(iExcluded))]...
-    [mdlDS.Properties.VariableNames; mdlDScell]...
+    mdlDScell
+%     [mdlDS.Properties.VariableNames; mdlDScell]...
     ];
 
 % header line
