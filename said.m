@@ -65,7 +65,7 @@ catch err
         errLogFileName = fullfile(CWD,...
             ['SAIDerrorLog' datestr(now,'yyyymmddHHMMSS') '.txt']);
         fid = fopen(errLogFileName,'W');
-        fprintf(fid,'SAID v 1.0\n');
+        fprintf(fid,'SAID v 1.1\n');
         fprintf(fid,['MCR version ' num2str(major) '.' num2str(minor) '\n']);
         fwrite(fid,err.getReport('extended','hyperlinks','off'));
         fclose(fid);
@@ -96,7 +96,7 @@ const_ds = table();
 matched_ds = table();
 CWD = getenv('USERPROFILE');
 
-version = '1.0';
+version = '1.1';
 
 % set initial values
 setappdata(hObject,'advmParamStruct',advmParamStruct);
@@ -394,9 +394,14 @@ if ~isempty(matched_ds)
         % get the new variable name
         trans_var_name = [trans_var{2} trans_var{1}];
         
+        if isa(matched_ds, 'dataset')
+            var_names = get(matched_ds,'VarNames');
+        elseif isa(matched_ds, 'table')
+            var_names = matched_ds.Properties.VariableNames;
+        end
+        
         % if the new variable name isn't already in the matched dataset
-%         if ~any(strcmp(trans_var_name,get(matched_ds,'VarNames')))
-        if ~any(strcmp(trans_var_name,matched_ds.Properties.VariableNames))
+        if ~any(strcmp(trans_var_name,var_names))
             
             % add the new transformed variable to the global list of
             % transformations

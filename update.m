@@ -127,8 +127,11 @@ const_trans_vars = {};
 surr_trans_vars = {};
 
 % get the constituent variable names
-% const_vars = get(const_ds,'VarNames');
-const_vars = const_ds.Properties.VariableNames;
+if isa(const_ds, 'dataset')
+    const_vars = get(const_ds,'VarNames');
+elseif isa(const_ds, 'table')
+    const_vars = const_ds.Properties.VariableNames;
+end
 
 % get the surrogate variable names
 surr_vars = fieldnames(loaded_var_struct);
@@ -216,8 +219,11 @@ ResponseVar = ...
 if ~isempty(matched_ds)
     
     mdlDS = matched_ds;
-%     mdlDSVarNames = mdlDS.Properties.VarNames;
-    mdlDSVarNames = mdlDS.Properties.VariableNames;
+    if isa(mdlDS, 'dataset')
+        mdlDSVarNames = mdlDS.Properties.VarNames;
+    elseif isa(mdlDS, 'table')
+        mdlDSVarNames = mdlDS.Properties.VariableNames;
+    end
     
     % if the predictor and response variables aren't empty and are valid
     if (~isempty(PredictorVars) && ~isempty(ResponseVar))   && ...
@@ -297,13 +303,17 @@ else
     
 end
 
-% get the variable names from the constituent dataset
-% const_var_names = get(const_ds,'VarNames');
-const_var_names = const_ds.Properties.VariableNames;
 
-% get the variable names from the matched dataset
-% surr_var_names = get(matched_ds,'VarNames');
-surr_var_names = matched_ds.Properties.VariableNames;
+if isa(const_ds, 'dataset')
+    % get the variable names from the constituent dataset
+    const_var_names = get(const_ds,'VarNames');
+    % get the variable names from the matched dataset
+    surr_var_names = get(matched_ds,'VarNames');
+elseif isa(const_ds, 'table')
+    const_var_names = const_ds.Properties.VariableNames;
+    surr_var_names = matched_ds.Properties.VariableNames;
+end
+
 
 % for i = 1:size(trans_vars,1)
 %     
@@ -433,8 +443,11 @@ advm_vars = { ...
     'SNR2'       ...
     };
 
-% master_vars = get(master_ds,'VarNames');
-master_vars = master_ds.Properties.VariableNames;
+if isa(master_ds, 'dataset')
+    master_vars = get(master_ds,'VarNames');
+elseif isa(master_ds, 'table')
+    master_vars = master_ds.Properties.VariableNames;
+end
 
 % convert max_time_min from minutes to MATLAB date serial number
 max_time_sn = datenum([0 0 0 0 max_time_min 0]);
@@ -464,12 +477,22 @@ for i = 1:length(loaded_var_names)
     if ~any([kAmp;kSNR;kadvm;kmvar])
         
         % initialize variable observations to nan
-%         matched_ds.(var_name) = nan(length(matched_ds),...
-        matched_ds.(var_name) = nan(height(matched_ds),...
-            size(loaded_var_struct.(var_name).(var_name),2));
+        if isa(matched_ds, 'dataset')
+            matched_ds.(var_name) = nan(length(matched_ds),...
+                size(loaded_var_struct.(var_name).(var_name),2));
+        elseif isa(matched_ds, 'table')
+            matched_ds.(var_name) = nan(height(matched_ds),...
+                size(loaded_var_struct.(var_name).(var_name),2));
+        end
         
         % for every observation in the matched dataset
-        for j = 1:height(matched_ds)
+        if isa(matched_ds, 'dataset')
+            number_of_obs = length(matched_ds);
+        elseif isa(matched_ds, 'table')
+            number_of_obs = height(matched_ds);
+        end
+        
+        for j = 1:number_of_obs
             
             % find the value and index of the minimum absolute time
             % difference

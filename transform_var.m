@@ -28,8 +28,11 @@ trans = [];
 trans_var = {};
 
 % get the variable names
-% ModelVarNames   = matchedDS.Properties.VarNames;
-ModelVarNames   = matchedDS.Properties.VariableNames;
+if isa(matchedDS, 'dataset')
+    ModelVarNames   = matchedDS.Properties.VarNames;
+elseif isa(matchedDS,'table')
+    ModelVarNames   = matchedDS.Properties.VariableNames;
+end
 
 % remove banned variable names
 for k = length(ModelVarNames):-1:1    

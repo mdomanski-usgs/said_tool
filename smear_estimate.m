@@ -9,8 +9,13 @@ end
 alpha = 0.10;
 
 % allocate space for predictor variables
-PredVarMatrix = zeros(length(PredDS),mdl.NumPredictors);
-% PredVarMatrix = zeros(height(PredDS),mdl.NumPredictors); % changed for 2014a - MMD 20151015
+if isa(PredDS, 'dataset')
+    PredVarMatrix = zeros(length(PredDS),mdl.NumPredictors);
+    var_names = PredDS.Properties.VarNames;
+elseif isa(PredDS, 'table')
+    PredVarMatrix = zeros(height(PredDS),mdl.NumPredictors); % changed for 2014a - MMD 20151015
+    var_names = PredDS.Properties.VariableNames;
+end
 
 % determine inverse of response variable transformation
 if strfind(mdl.ResponseName,'log10')==1
@@ -37,8 +42,7 @@ for k = 1:mdl.NumPredictors
     
     PredictorName = mdl.PredictorNames{k};
     
-    if ~ismember(PredictorName,PredDS.Properties.VarNames)
-%    if ~ismember(PredictorName,PredDS.Properties.VariableNames) % changed for 2014a - MMD 20151015
+    if ~ismember(PredictorName,var_names)
     
         if strfind(mdl.PredictorNames{1},'log10')==1
             LinearPredictorName = strrep(PredictorName,'log10','');
@@ -60,7 +64,7 @@ for k = 1:mdl.NumPredictors
         end
         
 %         if ismember(LinearPredictorName,PredDS.Properties.VarNames)
-        if ismember(LinearPredictorName,PredDS.Properties.VariableNames) % changed for 2014a - MMD 20151015
+        if ismember(LinearPredictorName, var_names) % changed for 2014a - MMD 20151015
             
             PredDS.(PredictorName) = f_pred(PredDS.(LinearPredictorName));
             
@@ -90,8 +94,7 @@ end
 
 % if all predictor names aren't present in the passed data set, duplicate
 % the error created by the LinearModel class
-if ~all(ismember(mdl.PredictorNames,PredDS.Properties.VarNames))
-% if ~all(ismember(mdl.PredictorNames,PredDS.Properties.VariableNames)) % changed for 2014a - MMD 20151015
+if ~all(ismember(mdl.PredictorNames,var_names))
     error('stats:classreg:regr:TermsRegression:MissingVariable',...
         ['X does not contain one or more predictor variables '...
         'needed for this model.']);
@@ -152,10 +155,17 @@ end
 % addded for 2014a - MMD 20151015
 % EstDS = dataset2table(EstDS);
 
-DateTime = PredDS(:,~cellfun(@isempty,strfind(PredDS.Properties.VarNames,'DateTime')));
-% DateTime = PredDS(:,~cellfun(@isempty,strfind(PredDS.Properties.VariableNames,'DateTime'))); % changed for 2014a - MMD 20151015
+if isa(PredDS, 'dataset')
+    DateTime = PredDS(:,~cellfun(@isempty,strfind(PredDS.Properties.VarNames,'DateTime')));
+elseif isa(PredDS, 'table')
+    DateTime = PredDS(:,~cellfun(@isempty,strfind(PredDS.Properties.VariableNames,'DateTime'))); % changed for 2014a - MMD 20151015
+end
 
-EstDS = [DateTime EstDS];
+if isa(DateTime, 'dataset')
+    EstDS = [DateTime EstDS];
+elseif isa(DateTime, 'table')
+    EstDS = [table2dataset(DateTime) EstDS];
+end
 
 for k = 1:mdl.NumPredictors
     
