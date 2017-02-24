@@ -363,12 +363,12 @@ end
 iVbeam = Vbeam < MinVbeam;
 MB(iVbeam,:) = NaN;
 
-% find the cells in the range given by the user
-inRange = (R >= RMin) & (R <= RMax);
+% % find the cells in the range given by the user
+% inRange = (R >= RMin) & (R <= RMax);
 
-% remove the columns outside of the range - 20140221 MMD
-MB(:,~inRange) = [];
-R(~inRange) = [];
+% % remove the columns outside of the range - 20140221 MMD
+% MB(:,~inRange) = [];
+% R(~inRange) = [];
 
 % if the beam is vertically oriented, find the cells that aren't fully
 % submerged and set them to NaN
@@ -469,11 +469,19 @@ if RemoveMinWCB
     nBadCells = sum(iWCBgtMin,2);
     
     iWCBgtMin(nBadCells==1,end) = 0;
-    
+
     MB(iWCBgtMin)   = NaN;
     WCB(iWCBgtMin)  = NaN;
     
 end
+
+% find the cells in the range given by the user
+inRange = (R >= RMin) & (R <= RMax);
+
+% remove the columns outside of the range - 20140221 MMD
+MB(:,~inRange) = [];
+WCB(:, ~inRange) = [];
+R(~inRange) = [];
 
 % find the invalid cells
 iMBValidCells       = ~isnan(MB);

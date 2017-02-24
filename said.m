@@ -59,9 +59,9 @@ catch err
         'Unexpected Error',...
         'error');
     
-    [major, minor] = mcrversion;
-    
     if isdeployed
+            
+        [major, minor] = mcrversion;
         errLogFileName = fullfile(CWD,...
             ['SAIDerrorLog' datestr(now,'yyyymmddHHMMSS') '.txt']);
         fid = fopen(errLogFileName,'W');
